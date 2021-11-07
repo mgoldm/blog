@@ -67,10 +67,8 @@ class CreateArticles < ActiveRecord::Migration[6.1]
 end
 ``` 
 Вызов create_table указывает на то, как должна быть сконструированна таблица articles. По умолчанию метод create_table добавляет столбец id в качестве автоматически увеличевающегося первичного ключа. Таким образом в таблице будет id 1, а у следующей записи 2 и т.д
-
 В блоке были добавлены два столбца title, body. Они были добавлены генератором, так как мы включили их в команду генерации.
 
-В последней строчке блока вызывается t.timestamps. Этот метод определяет два дополнительных столбца с именами created_at и updated_at. Как увидите, Rails позаботится о них. устанавливая значения при создании или обновлении объекта модели.
 ####Запустим нашу миграцию
 ```
 $ bin/rails db:migrate
@@ -197,7 +195,30 @@ http://127.0.0.1:3000/articles/1
 http://127.0.0.1:3000/articles/new
 ![image](https://user-images.githubusercontent.com/57058926/140610858-a59c5868-e8b3-4f92-964c-e08796397e7a.png)
 
+## Тестирование на rspeс
+Протестируем работу контроллера create для создания нового раздела.
+```
+require 'spec_helper'
+require 'rails_helper'
+require_relative 'C:/Users/Nick Smirnov/RoR/blog/app/controllers/articles_controller.rb'
+describe ArticlesController < ApplicationController do
+	describe '.create' do
+		it 'sets the name' do
+			articles = Article.new(title: 'Ruby_test', body: 'testing')
+			
+			expect(articles.title).to eq 'Ruby_test'
+		end
+  end
 
+end
 
+```
+В этот тесте программа пробует создать новый элемент с названием Ruby_test и телом "testing"
+пропишем команду
+````
+bundle exec rspec spec/articles_controller_spec.rb
+````
+И как результат увидим, что программа успешно прошла тест
+![image](https://user-images.githubusercontent.com/57058926/140651751-307e612f-3b47-4c43-b996-9a68b24d9615.png)
 
 
