@@ -7,8 +7,8 @@ describe ArticlesController < ApplicationController do
 			articles = Article.new(title: 'Ruby_test', body: 'testing')
 			
 			expect(articles.title).to eq 'Ruby_test'
-		end
+      expect(articles.body).to eq 'testing'
+    end
   end
-
 end
 
